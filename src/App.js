@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Redirect } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
@@ -8,6 +8,7 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import React from 'react';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
+import SignIn from './components/sign-in/sign-in.component';
 
 // const HatsPage = () => (
 //   <div>
@@ -53,12 +54,16 @@ class App extends React.Component {
         <Routes>
           <Route exact path='/' element={<Homepage />}/>
           <Route path='/shop' element={<ShopPage />}/>
-          <Route path='/signin' element={<SignInAndSignUpPage />}/>
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)}/>
         </Routes>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+});
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
