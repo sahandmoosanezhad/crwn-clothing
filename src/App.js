@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, Redirect } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
@@ -54,10 +54,10 @@ class App extends React.Component {
         <Routes>
           <Route exact path='/' element={<Homepage />}/>
           <Route path='/shop' element={<ShopPage />}/>
-          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)}/>
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Navigate to='/' />) : (<SignInAndSignUpPage />)}/>
         </Routes>
       </div>
-    );
+    ); 
   }
 }
 
